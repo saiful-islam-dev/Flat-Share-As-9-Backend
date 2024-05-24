@@ -18,10 +18,11 @@ model User {
   username      String    @unique
   email         String    @unique
   password      String
-  firstName     String
-  lastName      String
+  name          String
   contactNumber String
   role          UserRole
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   flats         Flat[]
   requests      Request[]
 
@@ -39,6 +40,8 @@ model Flat {
   postedBy    User      @relation(fields: [postedById], references: [id])
   postedById  String
   requests    Request[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("flat")
 }
@@ -49,9 +52,10 @@ model Request {
   userId    String
   status    Status   @default(PENDING)
   message   String
-  createdAt DateTime @default(now())
   flat      Flat     @relation(fields: [flatId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("request")
 }

@@ -9,6 +9,7 @@ import { IGenericErrorMessage } from "../../interfaces/error";
 import handleValidationError from "../../error/handleValidationError";
 import handleZodError from "../../error/handleZodError";
 import handleClientError from "../../error/handleClientError";
+import ApiError from "../../error/ApiErorr";
 
 const globalErrorHandler: ErrorRequestHandler = (
   error,

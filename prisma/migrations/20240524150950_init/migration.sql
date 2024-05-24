@@ -10,10 +10,11 @@ CREATE TABLE "user" (
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "contactNumber" TEXT NOT NULL,
     "role" "UserRole" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -28,6 +29,8 @@ CREATE TABLE "flat" (
     "amenities" TEXT NOT NULL,
     "photos" TEXT NOT NULL,
     "postedById" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "flat_pkey" PRIMARY KEY ("id")
 );
@@ -40,6 +43,7 @@ CREATE TABLE "request" (
     "status" "Status" NOT NULL DEFAULT 'PENDING',
     "message" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "request_pkey" PRIMARY KEY ("id")
 );
