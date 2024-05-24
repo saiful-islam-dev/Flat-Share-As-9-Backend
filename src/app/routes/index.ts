@@ -1,22 +1,27 @@
 import express from "express";
-import { AuthRouters } from "../modules/auth/auth.routers";
-import { RequestRouters } from "../modules/request/request.routers";
-import { FlatRouters } from "../modules/flat/flat.routers";
+import { authRouters } from "../modules/auth/auth.routers";
+import { requestRouters } from "../modules/request/request.routers";
+import { flatRouters } from "../modules/flat/flat.routers";
+import { userRouters } from "../modules/user/user.routers";
 
 const router = express.Router();
 
 const moduleRoutes = [
   {
     path: "/auth",
-    route: AuthRouters,
+    route: authRouters,
+  },
+  {
+    path: "/user",
+    route: userRouters,
   },
   {
     path: "/flat",
-    route: FlatRouters,
+    route: flatRouters,
   },
   {
     path: "/request",
-    route: RequestRouters,
+    route: requestRouters,
   },
 ];
 
