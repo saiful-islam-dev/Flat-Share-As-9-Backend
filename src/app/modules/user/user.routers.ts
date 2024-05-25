@@ -1,11 +1,21 @@
 import express from "express";
 import { UserController } from "./user.controller";
+import { USER_ROLE } from "../../../enums/user";
+import auth from "../../middlewares/auth";
 
 const router = express.Router();
 
-router.get("/", UserController.getAllUser);
+router.get(
+  "/",
+  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
+  UserController.getAllUser
+);
 
-router.get("/me", UserController.getMyProfile);
+router.get(
+  "/me",
+  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
+  UserController.getMyProfile
+);
 
 router.post("/create-user", UserController.createUser);
 
@@ -21,6 +31,10 @@ router.post("/create-user", UserController.createUser);
 
 router.patch("/:id/status", UserController.changeProfileStatus);
 
-router.patch("/update-my-profile", UserController.updateMyProfile);
+router.patch(
+  "/update-my-profile",
+  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
+  UserController.updateMyProfile
+);
 
 export const userRouters = router;

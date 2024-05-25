@@ -1,18 +1,38 @@
-const createFlatInToDB = async (payload: any) => {
-  console.log(payload);
+import prisma from "../../../shared/prisma";
+
+const createFlatInToDB = async (userId: string, data: any) => {
+  data.postedById = userId;
+
+  console.log(data);
+  const result = await prisma.flat.create({
+    data,
+  });
+
+  return result;
 };
 
 const getFlats = async (payload: any) => {
-  console.log(payload);
+  return await prisma.flat.findMany();
 };
-const getFlatById = async (payload: any) => {
-  console.log(payload);
+const getFlatById = async (id: string) => {
+  const result = await prisma.flat.findUnique({
+    where: { id },
+  });
+  return result;
 };
-const updateFlat = async (payload: any) => {
-  console.log(payload);
+
+const updateFlat = async (id: string, data: any) => {
+  console.log({ id, data });
+  const result = await prisma.flat.update({
+    where: { id },
+    data,
+  });
+
+  return result;
 };
-const deleteFlat = async (payload: any) => {
-  console.log(payload);
+
+const deleteFlat = async (id: string) => {
+  return await prisma.flat.delete({ where: { id } });
 };
 
 export const FlatServices = {

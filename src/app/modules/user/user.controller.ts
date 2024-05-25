@@ -2,11 +2,10 @@ import { Request, Response } from "express";
 import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { UserServices } from "./user.services";
+import { JwtPayload } from "jsonwebtoken";
 
 const getAllUser = catchAsync(async (req: Request, res: Response) => {
   const result = await UserServices.getAllUser();
-  console.log({ result });
-
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -16,14 +15,13 @@ const getAllUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getMyProfile = catchAsync(async (req: Request, res: Response) => {
-  const id = req.body.id;
-  const result = await UserServices.getMyProfile(id);
-  console.log({ result });
+  const userId: string = (req.user as JwtPayload).userId;
+  const result = await UserServices.getMyProfile(userId);
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Password changed successfully!",
+    message: "User profile retrieved successfully",
     data: result,
   });
 });
@@ -38,6 +36,7 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
   const result = await UserServices.changeProfileStatus(req.body);
 
@@ -48,8 +47,10 @@ const changeProfileStatus = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 const updateMyProfile = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserServices.updateMyProfile(req.body);
+  const userId: string = (req.user as JwtPayload).userId;
+  const result = await UserServices.updateMyProfile(userId, req.body);
 
   sendResponse(res, {
     statusCode: 200,

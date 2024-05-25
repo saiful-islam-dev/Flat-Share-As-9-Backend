@@ -22,7 +22,7 @@ model User {
   contactNumber String
   role          UserRole
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  updatedAt     DateTime  @updatedAt 
   flats         Flat[]
   requests      Request[]
 
@@ -41,6 +41,7 @@ model Flat {
   postedById  String
   requests    Request[]
   createdAt   DateTime  @default(now())
+  
   updatedAt   DateTime  @updatedAt
 
   @@map("flat")
