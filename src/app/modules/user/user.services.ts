@@ -46,7 +46,6 @@ const createUser = async (userData: any) => {
       updatedAt: true,
     },
   });
-  console.log(result);
   return result;
 };
 

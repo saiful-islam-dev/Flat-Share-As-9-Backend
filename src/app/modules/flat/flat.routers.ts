@@ -2,11 +2,14 @@ import express from "express";
 import { flatController } from "./flat.controller";
 import { USER_ROLE } from "../../../enums/user";
 import auth from "../../middlewares/auth";
+import validateRequest from "../../middlewares/validateRequest";
+import { FlatValidationSchema } from "./flat.validdaiton";
 
 const router = express.Router();
 
 router.post(
   "/create-flat",
+  validateRequest(FlatValidationSchema.createFlatSchema),
   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
   flatController.createFlat
 );

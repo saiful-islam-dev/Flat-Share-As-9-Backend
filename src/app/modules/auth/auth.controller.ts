@@ -14,6 +14,8 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 
   res.cookie("refreshToken", refreshToken, cookieOptions);
 
+  console.log(result);
+
   sendResponse(res, {
     statusCode: 200,
     success: true,

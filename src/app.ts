@@ -3,11 +3,16 @@ import cors from "cors";
 import router from "./app/routes";
 import cookieParser from "cookie-parser";
 import httpStatus from "http-status";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 const app: Application = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://flat-share-backend-rho.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -25,6 +30,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/v1", router);
+
+//global error handler
+app.use(globalErrorHandler);
 
 //handle not found
 app.use((req: Request, res: Response, next: NextFunction) => {

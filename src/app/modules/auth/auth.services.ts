@@ -15,11 +15,15 @@ import ApiError from "../../../error/ApiErorr";
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   const { email, password } = payload;
-  const isUserExist = await prisma.user.findUnique({ where: { email } });
+  console.log({ payload });
+
+  const isUserExist = await prisma.user.findUniqueOrThrow({ where: { email } });
 
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, "User does not exist");
   }
+
+  console.log(payload);
 
   if (
     isUserExist.password &&
