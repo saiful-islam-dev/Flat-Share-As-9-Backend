@@ -30,3 +30,15 @@ export const updateUserSchema = z.object({
     .optional(),
   role: z.enum(["ADMIN", "USER"]).optional(),
 });
+
+const updateStatus = z.object({
+  body: z.object({
+    status: z.enum(["PENDING", "ACTIVE", "BLOCKED"]),
+  }),
+});
+
+export const UserValidationSchema = {
+  createUserSchema,
+  updateUserSchema,
+  updateStatus,
+};

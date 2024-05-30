@@ -6,6 +6,8 @@ import { JwtPayload } from "jsonwebtoken";
 
 const createFlat = catchAsync(async (req: Request, res: Response) => {
   const userId: string = (req.user as JwtPayload).userId;
+
+  console.log(req.body);
   const result = await FlatServices.createFlatInToDB(userId, req.body);
   sendResponse(res, {
     statusCode: 200,
@@ -14,7 +16,6 @@ const createFlat = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
 
 const getFlats = catchAsync(async (req: Request, res: Response) => {
   const result = await FlatServices.getFlats(req.params);

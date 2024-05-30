@@ -2,6 +2,8 @@ import express from "express";
 import { UserController } from "./user.controller";
 import { USER_ROLE } from "../../../enums/user";
 import auth from "../../middlewares/auth";
+import validateRequest from "../../middlewares/validateRequest";
+import { UserValidationSchema } from "./user.validation";
 
 const router = express.Router();
 
@@ -13,26 +15,28 @@ router.get(
 
 router.get(
   "/me",
+
   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
   UserController.getMyProfile
 );
 
-router.post("/create-user", UserController.createUser);
+router.post(
+  "/create-user",
+  validateRequest(UserValidationSchema.createUserSchema),
+  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
+  UserController.createUser
+);
 
-// router.post(
-//   "/create-admin",
-//   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
-//   FileUploadHelper.upload.single("file"),
-//   (req: Request, res: Response, next: NextFunction) => {
-//     req.body = UserValidation.createAdmin.parse(JSON.parse(req.body.data));
-//     return UserController.createAdmin(req, res, next);
-//   }
-// );
-
-router.patch("/:id/status", UserController.changeProfileStatus);
+router.patch(
+  "/:id/status",
+  validateRequest(UserValidationSchema.updateUserSchema),
+  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
+  UserController.changeProfileStatus
+);
 
 router.patch(
   "/update-my-profile",
+  validateRequest(UserValidationSchema.updateUserSchema),
   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
   UserController.updateMyProfile
 );

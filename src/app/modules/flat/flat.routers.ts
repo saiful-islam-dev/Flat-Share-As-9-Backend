@@ -28,12 +28,14 @@ router.get(
 
 router.patch(
   "/:id",
-  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
+  validateRequest(FlatValidationSchema.updateFlatSchema),
+  auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN),
   flatController.updateFlat
 );
 
 router.delete(
   "/:id",
+  validateRequest(FlatValidationSchema.deleteFlatSchema),
   auth(USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.USER),
   flatController.deleteFlat
 );

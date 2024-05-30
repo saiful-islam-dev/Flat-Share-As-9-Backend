@@ -11,7 +11,6 @@ export const createFlatSchema = z.object({
       .positive("Number of bedrooms must be a positive integer"),
     amenities: z.string().min(1, "Amenities are required"),
     photos: z.string(),
-    //   postedById: z.string().uuid("PostedBy ID must be a valid UUID"),
   }),
 });
 
@@ -30,7 +29,16 @@ export const updateFlatSchema = z.object({
   }),
 });
 
+export const deleteFlatSchema = z.object({
+  body: z.object({
+    id: z
+      .string()
+      .nonempty({ message: "Flat ID must be provided as a non-empty string" }),
+  }),
+});
+
 export const FlatValidationSchema = {
   createFlatSchema,
   updateFlatSchema,
+  deleteFlatSchema,
 };
